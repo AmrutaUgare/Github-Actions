@@ -19,8 +19,3 @@ jobs:
           VAR4: Workflow jobs
         run: |
           echo $VAR1 $VAR2 $VAR3 $VAR4
-          - name: Set output parameter
-          run: echo '::set-output name=OUTPUT_PARAM::parameter_set'
-           id: output-parameter-setter
-           - name: Get output
-           run: echo "The output parameter is set to ${{ steps.output-parameter-setter.outputs.OUTPUT_PARAM }}"
