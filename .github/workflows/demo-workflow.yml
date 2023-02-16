@@ -5,11 +5,18 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ $default-branch ]
+  workflow_dispatch:
+
+    inputs:
+      name:
+        description: 'Person to great'
+        default: 'World'
+        required: true
 
 jobs:
   first_demo_job:
     runs-on: ubuntu-latest
-    name: The first demo job
+    name: display variables
     steps:
       - name: Show the demo running
         env:
@@ -19,3 +26,9 @@ jobs:
           VAR4: Workflow jobs
         run: |
           echo $VAR1 $VAR2 $VAR3 $VAR4
+  second_demo_job:
+    runs-on: ubuntu-latest
+    name: greeting msg
+    steps:
+      - name: Send greeting
+        run: echo "Hello ${{ github.event.inputs.name }}"
