@@ -46,7 +46,11 @@ jobs:
           ls -a
           echo
           echo 2. Goto folder scripts
-          cd Github-Actions/scripts/
+          cd Github-Actions
+          ls -a
+          echo
+          echo 3. Goto addition.sh file
+          touch addition.sh
           echo
   third_demo_job:
       runs-on: ubuntu-latest
