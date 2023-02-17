@@ -40,11 +40,10 @@ jobs:
       - name: Run multiline script
         run: |
           echo 1. What is in this directory?
-          cd Github-Actions/scripts/
-           ls -a
-          echo
-          cd scripts/
           ls -a
+          echo
+          echo 2. Goto folder scripts
+          cd /Github-Actions/scripts/
           echo
   third_demo_job:
       runs-on: ubuntu-latest
@@ -52,6 +51,6 @@ jobs:
       steps: 
         - uses: actions/checkout@v2
         - name: Run a addition script
-          run: ./ .github/Github-Actions/scripts/addition.sh
+          run: ./.github/Github-Actions/scripts/addition.sh
           shell: bash
   
