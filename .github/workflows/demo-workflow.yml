@@ -46,7 +46,7 @@ jobs:
           ls -a
           echo
           echo 2. Goto folder scripts
-          cd /Github-Actions/scripts/
+          cd Github-Actions/scripts/
           echo
   third_demo_job:
       runs-on: ubuntu-latest
