@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ main ]
   workflow_dispatch:
 
     inputs:
@@ -42,4 +42,11 @@ jobs:
           echo 1. What is in this directory?
           ls -a
           echo
+  third_demo_job:
+      runs-on: ubuntu-latest
+      name: Run script
+      steps: 
+        - name: Run a addition script
+          run: ./ .github/scripts/addition.sh
+          shell: bash
   
