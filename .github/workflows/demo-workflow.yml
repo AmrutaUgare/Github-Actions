@@ -40,8 +40,8 @@ jobs:
       - name: Run multiline script
         run: |
           echo 1. What is in this directory?
-          cd ..
-          ls -a
+          cd Github-Actions/scripts/
+           ls -a
           echo
           cd scripts/
           ls -a
