@@ -40,6 +40,7 @@ jobs:
       - name: Run multiline script
         run: |
           echo 1. What is in this directory?
+          cd ..
           ls -a
           echo
   third_demo_job:
