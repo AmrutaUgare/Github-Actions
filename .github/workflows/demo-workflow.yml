@@ -43,12 +43,12 @@ jobs:
           cd ..
           ls -a
           echo
-  third_demo_job:
-      runs-on: ubuntu-latest
-      name: Run script
-      steps: 
-        - uses: actions/checkout@v2
-        - name: Run a addition script
-          run: ./ .github/scripts/addition.sh
-          shell: bash
+#   third_demo_job:
+#       runs-on: ubuntu-latest
+#       name: Run script
+#       steps: 
+#         - uses: actions/checkout@v2
+#         - name: Run a addition script
+#           run: ./ .github/scripts/addition.sh
+#           shell: bash
   
