@@ -41,6 +41,7 @@ jobs:
         run: |
           echo 1. What is in this directory?
           ls -a
+          cd ..
           echo
           echo 2. Goto folder scripts
           cd /Github-Actions/scripts/
