@@ -45,11 +45,15 @@ jobs:
           cd ..
           ls -a
           echo
-          echo 2. Goto folder scripts
+          echo 2. Goto Github-Actions
           cd Github-Actions
           ls -a
           echo
-          echo 3. Goto addition.sh file
+          echo 3. Goto scripts folder
+          cd scripts
+          ls -a
+          echo
+          echo 4. Goto addition.sh file
           touch addition.sh
           echo
   third_demo_job:
