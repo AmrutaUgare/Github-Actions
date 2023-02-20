@@ -12,6 +12,19 @@ on:
         description: 'Person to great'
         default: 'World'
         required: true
+      environment:
+        type: environment
+        description: Select the environment
+      boolean:
+        type: boolean
+        description: True or False
+      choice:
+        type: choice
+        description: Make a choice
+        options:
+        - sandbox
+        - dev
+        - prod
       
 
 jobs:
@@ -58,10 +71,12 @@ jobs:
           echo
   third_demo_job:
       runs-on: ubuntu-latest
-      name: Run script
-      steps: 
-        - uses: actions/checkout@v2
-        - name: Run a addition script
-          run: ./.github/Github-Actions/scripts/addition.sh
-          shell: bash
+      steps:
+      - uses: actions/checkout@v2
+      - name: greet
+        run: | 
+          echo "environment is ${{ github.event.inputs.environment }} / ${{ inputs.environment }}"
+          echo "boolean is ${{ github.event.inputs.boolean }}" / ${{ inputs.boolean }} 
+          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
   
+    
