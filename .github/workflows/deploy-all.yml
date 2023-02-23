@@ -9,15 +9,17 @@ on:
         type: choice
         description: Make a choice for stage
         options:
-        - all
+    #    - all
         - sandbox
         - dev
         - prod
       choice_region:
         type: choice
         description: Make a choice for region
+        default: ""
+        required: true
         options:
-        - all
+      #  - all
         - ap-south-1
         - us-east-2
         - ap-northeast-2 
@@ -25,12 +27,19 @@ on:
       choice_service:
         type: choice
         description: Make a choice for service
+        default: ""
+        required: true
         options:
-        - all
+      #  - all
         - auth
         - account
         - part
         - document
+      handler:
+        description: 'Enter handler name'
+        default: ""
+        required: true
+        type: string
          
         
       
