@@ -1,0 +1,44 @@
+name: deploy-all
+
+on:
+  workflow_dispatch:
+
+    inputs:
+      name:
+      
+      choice_stage:
+        type: choice
+        description: Make a choice for stage
+        options:
+        - all
+        - sandbox
+        - dev
+        - prod
+      choice_region:
+        type: choice
+        description: Make a choice for region
+        options:
+        - all
+        - ap-south-1
+        - us-east-2
+        - ap-northeast-2 
+        - eu-central-1
+      choice_service:
+        type: choice
+        description: Make a choice for service
+        options:
+        - all
+        - auth
+        - account
+        - part
+        - document
+  jobs:
+  deploy_job:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - name: display
+        run: | 
+            echo "choice is ${{ github.event.inputs.choice_stage }}" / ${{ inputs.choice_stage }}
+            echo "choice is ${{ github.event.inputs.choice_region }}" / ${{ inputs.choice_region }}
+            echo "choice is ${{ github.event.inputs.choice_service }}" / ${{ inputs.choice_service }}
