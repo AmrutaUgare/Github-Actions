@@ -3,8 +3,7 @@ name: deploy-all
 on:
   workflow_dispatch:
     inputs:
-      name:
-      
+          
       choice_stage:
         type: choice
         description: Make a choice for stage
@@ -12,31 +11,31 @@ on:
           - sandbox
           - dev
           - prod
-          - all
-        
+                  
       choice_region:
         type: choice
         description: Make a choice for region
         default: ""
         required: false
         options:
+          - all
           - ap-south-1
           - us-east-2
           - ap-northeast-2
           - eu-central-1
-          - all
-          
+                    
       choice_service:
         type: choice
         description: Make a choice for service
         default: ""
         required: false
         options:
+          - all
           - auth
           - account
           - part
           - document
-          - all
+          
           
       handler:
         description: Enter handler name
@@ -49,8 +48,8 @@ jobs:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
     steps:
-#       - name: Checkout the code
-#         uses: actions/checkout@v2
+      - name: Checkout the code
+        uses: actions/checkout@v2
    
       - name: display
         run: |
