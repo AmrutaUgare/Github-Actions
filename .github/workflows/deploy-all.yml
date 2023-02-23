@@ -1,4 +1,4 @@
-name: deploy-all
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -69,6 +69,13 @@ jobs:
       - name: check stage prod
         if: ${{ github.event.inputs.choice_stage  == 'prod' }}
         run: echo 'Stage is prod, set aws credentials for prod environment . '
+        
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          ${{ github.event.inputs.choice_stage == 'sandbox' }}
+        with:
+          run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
     
             
 
