@@ -9,7 +9,7 @@ on:
         type: choice
         description: Make a choice for stage
         options:
-    #    - all
+     #   - all
         - sandbox
         - dev
         - prod
@@ -19,7 +19,7 @@ on:
         default: ""
         required: false
         options:
-      #  - all
+        - all
         - ap-south-1
         - us-east-2
         - ap-northeast-2 
@@ -30,7 +30,7 @@ on:
         default: ""
         required: false
         options:
-      #  - all
+        - all
         - auth
         - account
         - part
@@ -49,9 +49,9 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
-      - name: greet
+      - name: display message
         run: | 
-            echo "choice is ${{ github.event.inputs.choice_stage }}" 
-            echo "choice is ${{ github.event.inputs.choice_region }}"
-            echo "choice is ${{ github.event.inputs.choice_service }}"
-            echo "Functionis ${{github.event.inputs.handler }}"
+            echo "stage is ${{ github.event.inputs.choice_stage }}" 
+            echo "region is ${{ github.event.inputs.choice_region }}"
+            echo "service is ${{ github.event.inputs.choice_service }}"
+            echo "Function is ${{github.event.inputs.handler }}"
