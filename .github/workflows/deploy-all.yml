@@ -51,26 +51,26 @@ jobs:
       - name: Checkout the code
       - uses: actions/checkout@v2
       
-      - name: Configure AWS credentials for (SANDBOX)
-        uses: "" 
-        if: |
-          ${{ github.event.inputs.choice_stage == sandbox }}
-        with:
-            message : "set the sandbox credentials"
+#       - name: Configure AWS credentials for (SANDBOX)
+#         uses: "" 
+#         if: |
+#           ${{ github.event.inputs.choice_stage == sandbox }}
+#         with:
+#             message : "set the sandbox credentials"
       
-      - name: Configure AWS credentials for (DEV)
-        uses: "" 
-        if: |
-          ${{ github.event.inputs.choice_stage == dev }}
-        with:
-            message : "set the dev credentials"
+#       - name: Configure AWS credentials for (DEV)
+#         uses: "" 
+#         if: |
+#           ${{ github.event.inputs.choice_stage == dev }}
+#         with:
+#             message : "set the dev credentials"
          
-      - name: Configure AWS credentials for (PROD)
-        uses: "" 
-        if: |
-          ${{ github.event.inputs.choice_stage == prod }}
-        with:
-            message : "set the prod credentials"
+#       - name: Configure AWS credentials for (PROD)
+#         uses: "" 
+#         if: |
+#           ${{ github.event.inputs.choice_stage == prod }}
+#         with:
+#             message : "set the prod credentials"
             
       - name: display message
         run: | 
