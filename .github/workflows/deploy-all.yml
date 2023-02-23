@@ -17,6 +17,8 @@ on:
       choice_region:
         type: choice
         description: Make a choice for region
+        default: ""
+        required: false
         options:
           - ap-south-1
           - us-east-2
@@ -27,6 +29,8 @@ on:
       choice_service:
         type: choice
         description: Make a choice for service
+        default: ""
+        required: false
         options:
           - auth
           - account
