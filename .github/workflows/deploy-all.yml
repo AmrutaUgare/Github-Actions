@@ -48,10 +48,34 @@ jobs:
    deploy_job:
       runs-on: ubuntu-latest
       steps:
+      - name: Checkout the code
       - uses: actions/checkout@v2
+      
+      - name: Configure AWS credentials for (SANDBOX)
+        if: |
+          ${{ github.event.inputs.choice_stage == sandbox }}
+        with:
+            message : "set the sandbox credentials"
+      
+      - name: Configure AWS credentials for (DEV)
+        if: |
+          ${{ github.event.inputs.choice_stage == dev }}
+        with:
+            message : "set the dev credentials"
+         
+      - name: Configure AWS credentials for (PROD)
+        if: |
+          ${{ github.event.inputs.choice_stage == prod }}
+        with:
+            message : "set the prod credentials"
+            
       - name: display message
         run: | 
             echo "stage is ${{ github.event.inputs.choice_stage }}" 
             echo "region is ${{ github.event.inputs.choice_region }}"
             echo "service is ${{ github.event.inputs.choice_service }}"
             echo "Function is ${{github.event.inputs.handler }}"
+            
+      - name: Deploy
+        run: |
+            echo "script run here...."
