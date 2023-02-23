@@ -58,9 +58,17 @@ jobs:
          echo "Service is ${{ github.event.inputs.choice_service }}"
          echo "Handler name is ${{ github.event.inputs.handler }}"
 
-      - name: check stage
+      - name: check stage sandbox
         if: ${{ github.event.inputs.choice_stage  == 'sandbox' }}
-        run: echo 'Stage is sandbox, set aws credentials .'
+        run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
+        
+      - name: check stage dev 
+        if: ${{ github.event.inputs.choice_stage  == 'dev' }}
+        run: echo 'Stage is dev, set aws credentials for dev environment . '
+        
+      - name: check stage prod
+        if: ${{ github.event.inputs.choice_stage  == 'prod' }}
+        run: echo 'Stage is prod, set aws credentials for prod environment . '
     
             
 
