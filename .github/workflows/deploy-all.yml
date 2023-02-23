@@ -2,18 +2,17 @@ name: deploy-all
 
 on:
   workflow_dispatch:
-
-  inputs:
+    inputs:
       name:
-
+      
       choice_stage:
-      type: choice
-      description: Make a choice for stage
-      options:
-        - sandbox
-        - dev
-        - prod
-        - all
+        type: choice
+        description: Make a choice for stage
+        options:
+          - sandbox
+          - dev
+          - prod
+          - all
         
       choice_region:
         type: choice
@@ -46,8 +45,8 @@ jobs:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
    
       - name: display
         run: |
