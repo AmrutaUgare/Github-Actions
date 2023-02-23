@@ -3,40 +3,43 @@ name: deploy-all
 on:
   workflow_dispatch:
 
-   inputs:
+  inputs:
       name:
 
-  choice_stage:
-    type: choice
-    description: Make a choice for stage
-    options:
-      - sandbox
-      - dev
-      - prod
-      - all
-    choice_region:
+      choice_stage:
       type: choice
-      description: Make a choice for region
+      description: Make a choice for stage
       options:
-        - ap-south-1
-        - us-east-2
-        - ap-northeast-2
-        - eu-central-1
+        - sandbox
+        - dev
+        - prod
         - all
-    choice_service:
-      type: choice
-      description: Make a choice for service
-      options:
-        - auth
-        - account
-        - part
-        - document
-        - all
-    handler:
-      description: Enter handler name
-      default: ""
-      required: false
-      type: string
+        
+      choice_region:
+        type: choice
+        description: Make a choice for region
+        options:
+          - ap-south-1
+          - us-east-2
+          - ap-northeast-2
+          - eu-central-1
+          - all
+          
+      choice_service:
+        type: choice
+        description: Make a choice for service
+        options:
+          - auth
+          - account
+          - part
+          - document
+          - all
+          
+      handler:
+        description: Enter handler name
+        default: ""
+        required: false
+        type: string
 
 jobs:
   start_deploy:
