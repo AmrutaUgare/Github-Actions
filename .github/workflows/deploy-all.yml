@@ -84,6 +84,15 @@ jobs:
             echo 'Region / Service is set to nil '
             REGION="${NIL}"
             echo "Hello $NIL nil and $REGION region "
+            
+      - name: Run script here (condition1)
+        if: startsWith( github.event.inputs.choice_region, 'all' ) || startsWith( github.event.inputs.choice_service, 'all' )
+        run: |
+            echo " scripts/deplpoy-all.sh -t ${{ github.event.inputs.choice_stage }} -r $NIL -s $NIL -h ${{ github.event.inputs.handler }} "
+
+      - name: Run script here (condition2)
+        run: |
+            echo " scripts/deplpoy-all.sh -t ${{ github.event.inputs.choice_stage }} -r ${{ github.event.inputs.choice_region }} -s ${{ github.event.inputs.choice_service }} -h ${{ github.event.inputs.handler }} "
            
             
 
