@@ -65,8 +65,15 @@ jobs:
          echo "Service is ${{ github.event.inputs.choice_service }}"
          echo "Handler name is ${{ github.event.inputs.handler }}"
          
-#  startsWith(github.ref, 'refs/heads/RELEASE')
- 
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        with:
+#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+#             aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_SANDBOX }}
+            CGO_ENABLED: 0
+         
       - name: check stage sandbox
         if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
         run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
