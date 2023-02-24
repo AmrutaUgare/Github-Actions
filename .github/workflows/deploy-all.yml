@@ -111,9 +111,9 @@ jobs:
             
             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
             
-            if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
+            if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
                   REGION="${NIL}"
-            elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
+            elif [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
                   SERVICE="${NIL}"
             fi
                   
