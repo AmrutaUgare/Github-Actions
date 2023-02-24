@@ -3,6 +3,8 @@ name: Deploy
 env: 
       NIL : ""
       REGION: ""
+      SERVICE: ""
+      HANDLER: ""
       
 on:
   
@@ -77,22 +79,32 @@ jobs:
         if: startsWith( github.event.inputs.choice_stage, 'prod' )
         run: |
             echo 'Stage is prod, set aws credentials for prod environment . '
-          
-      - name: set options value all to nil
-        if: startsWith( github.event.inputs.choice_region, 'all' )
+            
+      - name: set all enterd value to variable
         run: |
-            echo 'Region / Service is set to nil '
+            STAGE="${{ github.event.inputs.choice_stage }}"
+            REGION="${{ github.event.inputs.choice_region }}"
+            SERVICE="${{ github.event.inputs.choice_service }}"
+            HANDLER="${{ github.event.inputs.handler }}"
+          
+      - name: set region options value all to nil
+        if: startsWith( github.event.inputs.choice_region, 'all' ) 
+        run: |
+            echo 'Region is set to nil '
             REGION="${NIL}"
             echo "Hello $NIL nil and $REGION region "
-            
-      - name: Run script here (condition1)
-        if: startsWith( github.event.inputs.choice_region, 'all' ) || startsWith( github.event.inputs.choice_service, 'all' )
+      
+      - name: set service options value all to nil
+        if: startsWith( github.event.inputs.choice_service, 'all' ) 
         run: |
-            echo " scripts/deplpoy-all.sh -t ${{ github.event.inputs.choice_stage }} -r $NIL -s $NIL -h ${{ github.event.inputs.handler }} "
-
+            echo 'Service is set to nil '
+            SERVICE="${NIL}"
+            echo "Hello $NIL nil and $SERVICE service "
+            
+      
       - name: Run script here (condition2)
         run: |
-            echo " scripts/deplpoy-all.sh -t ${{ github.event.inputs.choice_stage }} -r ${{ github.event.inputs.choice_region }} -s ${{ github.event.inputs.choice_service }} -h ${{ github.event.inputs.handler }} "
+            echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
            
             
 
