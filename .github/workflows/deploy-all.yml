@@ -1,8 +1,10 @@
 name: Deploy
 
+env: 
+      NIL : ""
+
 on:
-  push: 
-    branches: [ main ]
+  
   workflow_dispatch:
     inputs:
           
@@ -49,8 +51,6 @@ jobs:
   start_deploy:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
-    env: 
-      all : ""
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -81,9 +81,9 @@ jobs:
         if: startsWith( github.event.inputs.choice_region, 'all' )
         run: |
             echo 'Region / Service is set to nil '
-            ${{ github.event.inputs.choice_region }} = $all
-            ${{ github.event.inputs.choice_service }} = $all
-            echo "Hello $all "
+            ${{ github.event.inputs.choice_region }} = $NIL
+            ${{ github.event.inputs.choice_service }} = $NIL
+            echo "Hello $NIL "
 #       - name: Configure AWS credentials for (SANDBOX)
 #         uses: aws-actions/configure-aws-credentials@v1
 #         if: |
