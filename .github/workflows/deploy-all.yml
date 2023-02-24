@@ -2,9 +2,7 @@ name: Deploy
 
 env: 
       NIL : ""
-      REGION: ""
-      SERVICE: ""
-
+      
 on:
   
   workflow_dispatch:
@@ -83,9 +81,8 @@ jobs:
         if: startsWith( github.event.inputs.choice_region, 'all' )
         run: |
             echo 'Region / Service is set to nil '
-            $REGION = $NIL
-            $SERVICE = $NIL
-            echo "Hello $REGION "
+            myVAR = $NIL
+            echo "Hello $myVAR "
 #       - name: Configure AWS credentials for (SANDBOX)
 #         uses: aws-actions/configure-aws-credentials@v1
 #         if: |
