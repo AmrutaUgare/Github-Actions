@@ -81,7 +81,7 @@ jobs:
             echo 'Stage is prod, set aws credentials for prod environment . '
             
       - name: set all enterd value to variable
-        run: |
+        run: 
             STAGE="${{ github.event.inputs.choice_stage }}"
             REGION="${{ github.event.inputs.choice_region }}"
             SERVICE="${{ github.event.inputs.choice_service }}"
@@ -102,8 +102,20 @@ jobs:
             echo "Hello $NIL nil and $SERVICE service "
             
       
-      - name: Run script here (condition2)
+      - name: Run script here
         run: |
+            STAGE="${{ github.event.inputs.choice_stage }}"
+            REGION="${{ github.event.inputs.choice_region }}"
+            SERVICE="${{ github.event.inputs.choice_service }}"
+            HANDLER="${{ github.event.inputs.handler }}"
+            
+            echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+            
+            if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
+                  REGION="${NIL}"
+            elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
+                  SERVICE="{NIL}"
+                  
             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
            
             
