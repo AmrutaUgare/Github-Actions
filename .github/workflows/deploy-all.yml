@@ -59,9 +59,11 @@ jobs:
          echo "Region is ${{ github.event.inputs.choice_region }}"
          echo "Service is ${{ github.event.inputs.choice_service }}"
          echo "Handler name is ${{ github.event.inputs.handler }}"
-
+         
+#  startsWith(github.ref, 'refs/heads/RELEASE')
+ 
       - name: check stage sandbox
-        if: ${{ github.event.inputs.choice_stage  == 'sandbox' }}
+        if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
         run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
         
       - name: check stage dev 
