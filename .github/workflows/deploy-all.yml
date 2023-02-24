@@ -49,6 +49,8 @@ jobs:
   start_deploy:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
+    env: 
+      all : ""
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -72,7 +74,13 @@ jobs:
         
       - name: check stage prod
         if: startsWith( github.event.inputs.choice_stage, 'prod' )
-        run: echo 'Stage is prod, set aws credentials for prod environment . '
+        run: |
+            echo 'Stage is prod, set aws credentials for prod environment . '
+          
+      - name: set options value all to nil
+        if: startsWith( github.event.inputs.choice_region, 'all' )
+        run: |
+            echo 'Region / Service is set to nil '
         
 #       - name: Configure AWS credentials for (SANDBOX)
 #         uses: aws-actions/configure-aws-credentials@v1
@@ -80,7 +88,6 @@ jobs:
 #           ${{ github.event.inputs.choice_stage == 'sandbox' }}
 #         with:
 #           aws_region :  ${{ github.event.inputs.choice_region }}
-#           run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
-    
+#           
             
 
