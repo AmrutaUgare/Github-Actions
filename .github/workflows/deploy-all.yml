@@ -113,7 +113,8 @@ jobs:
             
             if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
                   REGION="${NIL}"
-            elif [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
+            fi
+            if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
                   SERVICE="${NIL}"
             fi
                   
