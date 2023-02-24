@@ -83,7 +83,7 @@ jobs:
         run: |
             echo 'Region / Service is set to nil '
             REGION = $NIL
-            echo "Hello $myVAR "
+            echo "Hello $REGION "
 #       - name: Configure AWS credentials for (SANDBOX)
 #         uses: aws-actions/configure-aws-credentials@v1
 #         if: |
