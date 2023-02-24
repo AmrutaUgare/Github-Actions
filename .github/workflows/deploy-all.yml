@@ -82,7 +82,8 @@ jobs:
         if: startsWith( github.event.inputs.choice_region, 'all' )
         run: |
             echo 'Region / Service is set to nil '
-            echo "Hello $NIL "
+            REGION="${NIL}"
+            echo "Hello $NIL nil and $REGION region "
            
             
 
