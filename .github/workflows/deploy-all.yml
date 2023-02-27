@@ -2,6 +2,7 @@ name: Deploy
 
 env: 
       MICRO_SERVICES : ('auth-service' 'account-service' 'part-service' 'document-service')
+      MICRO : 'auth-service'
       NIL : ""
       REGION: ""
       SERVICE: ""
@@ -70,7 +71,11 @@ jobs:
          echo "Service is ${{ github.event.inputs.choice_service }}"
          echo "Handler name is ${{ github.event.inputs.handler }}"
          
-#  startsWith(github.ref, 'refs/heads/RELEASE')
+
+      - name: Install and Cache dependencies
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          working-directory: ${{ env.MICRO }}
  
       - name: check stage sandbox
         if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
