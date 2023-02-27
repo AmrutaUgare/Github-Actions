@@ -1,6 +1,7 @@
 name: Deploy
 
 env: 
+      MICRO_SERVICES : ("auth-service" "account-service" "part-service" "document-service")
       NIL : ""
       REGION: ""
       SERVICE: ""
@@ -87,6 +88,10 @@ jobs:
             SERVICE="${{ github.event.inputs.choice_service }}"
             HANDLER="${{ github.event.inputs.handler }}"
           
+      - name: Tag array
+#         if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
+        run: echo "my service is ${MICRO_SERVICES}"
+     
       - name: set region options value all to nil
         if: startsWith( github.event.inputs.choice_region, 'all' ) 
         run: |
