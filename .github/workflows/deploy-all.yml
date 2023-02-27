@@ -1,7 +1,7 @@
 name: Deploy
 
 env: 
-      MICRO_SERVICES : ("auth-service" "account-service" "part-service" "document-service")
+      MICRO_SERVICES : ('auth-service' 'account-service' 'part-service' 'document-service')
       NIL : ""
       REGION: ""
       SERVICE: ""
