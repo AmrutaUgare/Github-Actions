@@ -63,6 +63,11 @@ jobs:
       - name: Tag array
 #         if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
         run: echo "my service is ${MICRO_SERVICES}"
+        
+      - name: Tag micro
+        run : |
+          echo "my service is ${{ env.MICRO }}
+ 
    
       - name: display
         run: |
@@ -72,11 +77,7 @@ jobs:
          echo "Handler name is ${{ github.event.inputs.handler }}"
          
 
-      - name: Install and Cache dependencies
-        uses: bahmutov/npm-install@v1.6.0
-        with:
-          working-directory: ${{ env.MICRO }}
- 
+      
       - name: check stage sandbox
         if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
         run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
