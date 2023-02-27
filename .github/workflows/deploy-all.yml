@@ -62,7 +62,7 @@ jobs:
         
       - name: Tag array
 #         if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
-        run: echo "my service is ${MICRO_SERVICES}"
+        run: echo "my service is ${{ env.MICRO_SERVICES }}"
         
       - name: Tag micro
         run : |
