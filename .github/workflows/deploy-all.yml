@@ -113,24 +113,77 @@ jobs:
             echo 'Service is set to nil '
             SERVICE="${NIL}"
             echo "Hello $NIL nil and $SERVICE service "
-            
-      
-      - name: Run script here
+         
+      - name: Deploy start (running script)
         run: |
-            STAGE="${{ github.event.inputs.choice_stage }}"
-            REGION="${{ github.event.inputs.choice_region }}"
-            SERVICE="${{ github.event.inputs.choice_service }}"
-            HANDLER="${{ github.event.inputs.handler }}"
+          STAGE="${{ github.event.inputs.choice_stage }}"
+          REGION="${{ github.event.inputs.choice_region }}"
+          SERVICE="${{ github.event.inputs.choice_service }}"
+          HANDLER="${{ github.event.inputs.handler }}"
+        
+          echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+        
+          if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
+              REGION="${NIL}"
+          fi
+          
+          if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
+              SERVICE="${NIL}"
+          fi
+               
+          if [ "${{ github.event.inputs.handler }}" == "" ]; then
+              HANDLER="${NIL}"
+          fi
+          
+          echo "Run our script here......... "
+
+          if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
+              REGION="${NIL}"
+          fi
+          
+          #      stage-any, region-all, service-all, handler-no 
+          if ( "${{ STAGE }}" -eq '' ) && ("${{REGION}}" == "" ) && ("{{$SERVICE}}" == "" ] && [ "${{HANDLER}}" == "" ]; then
+            echo "scripts/deploy-all.sh -t $STAGE"
             
-            echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+          
+          #      stage-any, region-any, service-any, handler-no            
+          elif [ "$STAGE" != "" ] && ["$REGION" != "" ] && ["$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+              echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE"
+          
+          #  stage-any, region-any, service-all, handler-no                           
+          elif [ "$STAGE" != "" ] && ["$REGION" != "" ] && ["$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+               echo "scripts/deploy-all.sh -t $STAGE -r $REGION"
+          
+          #  stage-any, region-all, service-any, handler-no    
+          elif [ "$STAGE" != "" ] && ["$REGION" == "" ] && ["$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+               echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE"
+          
+          #  stage-any, region-all, service-any, handler-any
+          elif [ "$STAGE" != "" ] && ["$REGION" == "" ] && ["$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+               echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE -f $HANDLER"
+          
+          #  stage-any, region-all, service-any, handler-any
+          elif [ "$STAGE" != "" ] && ["$REGION" != "" ] && ["$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+              echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE -f $HANDLER"
+               
+          fi 
+      
+#       - name: Run script here
+#         run: |
+#             STAGE="${{ github.event.inputs.choice_stage }}"
+#             REGION="${{ github.event.inputs.choice_region }}"
+#             SERVICE="${{ github.event.inputs.choice_service }}"
+#             HANDLER="${{ github.event.inputs.handler }}"
             
-            if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
-                  REGION="${NIL}"
-            elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
-                  SERVICE="${NIL}"
-            fi
+#             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+            
+#             if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
+#                   REGION="${NIL}"
+#             elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
+#                   SERVICE="${NIL}"
+#             fi
                   
-            echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+#             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
            
             
 
