@@ -142,7 +142,7 @@ jobs:
           fi
           
           #      stage-any, region-all, service-all, handler-no 
-          if ( "${{ STAGE }}" -eq '' ) && ("${{REGION}}" == "" ) && ("{{$SERVICE}}" == "" ] && [ "${{HANDLER}}" == "" ]; then
+          if [ "$STAGE" == "" ] && ["$REGION" == "" ] && ["$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
             echo "scripts/deploy-all.sh -t $STAGE"
             
           
