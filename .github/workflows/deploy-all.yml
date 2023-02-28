@@ -148,7 +148,7 @@ jobs:
               echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE"
           
           #  stage-any, region-any, service-all, handler-no                           
-          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && ["$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
                echo "scripts/deploy-all.sh -t $STAGE -r $REGION"
           
           #  stage-any, region-all, service-any, handler-no    
