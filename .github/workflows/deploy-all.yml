@@ -137,12 +137,9 @@ jobs:
           
           echo "Run our script here......... "
 
-          if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
-              REGION="${NIL}"
-          fi
-          
+                   
           #      stage-any, region-all, service-all, handler-no 
-          if [ "$STAGE" == "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+          if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
             echo "scripts/deploy-all.sh -t $STAGE"
             
           
