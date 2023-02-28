@@ -156,10 +156,10 @@ jobs:
                echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE"
           
           #  stage-any, region-all, service-any, handler-any
-          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
                echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE -f $HANDLER"
           
-          #  stage-any, region-all, service-any, handler-any
+          #  stage-any, region-any, service-any, handler-any
           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
               echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE -f $HANDLER"
                
