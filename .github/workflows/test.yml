@@ -75,7 +75,7 @@ jobs:
           node-version: 14.x
 
       - name: Install Serverless dependencies
-        uses: actions/npm-install@v1
+        uses: actions/setup-npm@v1
         with:
           npm-version: 6.x
           working-directory: ${{ env.KNYO_DIRECTORY }}
