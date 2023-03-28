@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy-test
 
 env:
   GO_VERSION: '1.18'
