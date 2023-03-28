@@ -1,0 +1,76 @@
+---
+frameworkVersion: '3.25.1'
+
+prune:
+  automatic: true
+  includeLayers: true
+  number: 3
+
+tags:
+  service: 'knyo'
+  micro-service: ${self:service}
+  owner: 'jeet@glabbr.tech'
+  stage: ${opt:stage}
+
+resource:
+  restApiGwPathExternalResourceId: ${cf:knyo-service-${opt:stage}.RestApiGwPathExternalResourceId}
+  restApiGwPathWebhooksResourceId: ${cf:knyo-service-${opt:stage}.RestApiGwPathWebhooksResourceId}
+  tags:
+    - Key: 'service'
+      Value: 'knyo'
+    - Key: 'micro-service'
+      Value: ${self:service}
+    - Key: 'owner'
+      Value: 'jeet@glabbr.tech'
+    - Key: stage
+      Value: ${opt:stage}
+
+apiGateway:
+  restApiId: ${cf:knyo-service-${opt:stage}.RestApiGw}
+  restApiRootResourceId: ${cf:knyo-service-${opt:stage}.RestApiGwV1ResourceId}
+
+service:
+  name: ${self:service}
+  s3Queue: "${self:service}-s3-queue-${opt:stage}"
+  awsAccId: ${file(config/${self:provider.stage}.json):aws.accountId}
+  queue: ${file(config/${self:provider.stage}.json):service.serviceQueue}
+  topic: ${file(config/${self:provider.stage}.json):service.serviceTopic}
+  eventSource: ${file(config/${self:provider.stage}.json):service.allowedEventSources}
+  eventType: ${file(config/${self:provider.stage}.json):service.allowedEventTypes}
+
+deploymentBucket:
+  bucket: ${cf:knyo-service-${opt:stage}.ServerlessBucketName}
+  maxPreviousDeploymentArtifacts: 2
+
+provider:
+  memorySize: 512
+  timeout: 30 # The default is 6 seconds. Note: API Gateway current maximum is 30 seconds
+  logRetentionInDays: ${file(config/${self:provider.stage}.json):log.retentionDays}
+#  kmsKeyArn: arn:aws:kms:us-east-1:XXXXXX:key/some-hash
+
+authorizer: # An AWS API Gateway custom authorizer function
+  authorizerId: ${cf:auth-service-${opt:stage}.AuthorizerId}
+  type: CUSTOM
+
+corsWithCookies:
+  maxAge: 86400
+  cacheControl: 'public, max-age=86400'
+  origin:
+    - ${file(config/${self:provider.stage}.json):service.appBasePath}
+  headers:
+    - Content-Type
+    - Authorization
+  allowCredentials: true
+
+cors:
+  maxAge: 86400
+  cacheControl: 'public, max-age=86400'
+  origins:
+    - ${file(config/${self:provider.stage}.json):service.appBasePath}
+  headers:
+    - Content-Type
+    - Authorization
+  allowCredentials: false
+
+iamRole:
+  name: ${self:service}-${aws:region}-lambda-execution-role
