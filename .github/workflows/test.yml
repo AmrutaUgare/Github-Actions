@@ -3,7 +3,7 @@ name: Deploy-test
 env:
   GO_VERSION: '1.18'
   GOLANGCI_VERSION: 'latest'
-  KNYO_DIRECTORY: './knyo'
+  KNYO_DIRECTORY: './'
 
   NIL : ""
   REGION: ""
