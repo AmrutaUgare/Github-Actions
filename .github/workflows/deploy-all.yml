@@ -1,18 +1,204 @@
+# name: Deploy
+
+# env: 
+#       MICRO_SERVICES : ('auth-service' 'account-service' 'part-service' 'document-service')
+#       MICRO : 'auth-service'
+#       NIL : ""
+#       REGION: ""
+#       SERVICE: ""
+#       HANDLER: ""
+      
+# on:
+  
+#   workflow_dispatch:
+#     inputs:
+          
+#       choice_stage:
+#         type: choice
+#         description: Make a choice for stage
+#         options:
+#           - sandbox
+#           - dev
+#           - prod
+                  
+#       choice_region:
+#         type: choice
+#         description: Make a choice for region
+#         default: ''
+#         required: false
+#         options:
+#           - all
+#           - ap-south-1
+#           - us-east-2
+#           - ap-northeast-2
+#           - eu-central-1
+                    
+#       choice_service:
+#         type: choice
+#         description: Make a choice for service
+#         default: ''
+#         required: false
+#         options:
+#           - all
+#           - auth
+#           - account
+#           - part
+#           - document
+          
+          
+#       handler:
+#         description: Enter handler name
+#         default: ''
+#         required: false
+#         type: string
+
+# jobs:
+#   start_deploy:
+#     name: build-n-deploy-services
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
+        
+#       - name: Tag array
+# #         if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
+#         run: echo "my service is ${{ env.MICRO_SERVICES }}"
+        
+#       - name: Tag micro
+#         run : |
+#           echo "my service is ${{ env.MICRO }}"
+ 
+   
+#       - name: display
+#         run: |
+#          echo "Stage is ${{ github.event.inputs.choice_stage }}"
+#          echo "Region is ${{ github.event.inputs.choice_region }}"
+#          echo "Service is ${{ github.event.inputs.choice_service }}"
+#          echo "Handler name is ${{ github.event.inputs.handler }}"
+         
+
+      
+#       - name: check stage sandbox
+#         if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
+#         run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
+        
+#       - name: check stage dev 
+#         if: startsWith( github.event.inputs.choice_stage, 'dev' )
+#         run: echo 'Stage is dev, set aws credentials for dev environment . '
+        
+#       - name: check stage prod
+#         if: startsWith( github.event.inputs.choice_stage, 'prod' )
+#         run: |
+#             echo 'Stage is prod, set aws credentials for prod environment . '
+            
+#       - name: set all enterd value to variable
+#         run: 
+#             STAGE="${{ github.event.inputs.choice_stage }}"
+#             REGION="${{ github.event.inputs.choice_region }}"
+#             SERVICE="${{ github.event.inputs.choice_service }}"
+#             HANDLER="${{ github.event.inputs.handler }}"
+          
+     
+     
+#       - name: set region options value all to nil
+#         if: startsWith( github.event.inputs.choice_region, 'all' ) 
+#         run: |
+#             echo 'Region is set to nil '
+#             REGION="${NIL}"
+#             echo "Hello $NIL nil and $REGION region "
+      
+#       - name: set service options value all to nil
+#         if: startsWith( github.event.inputs.choice_service, 'all' ) 
+#         run: |
+#             echo 'Service is set to nil '
+#             SERVICE="${NIL}"
+#             echo "Hello $NIL nil and $SERVICE service "
+         
+#       - name: Deploy start (running script)
+#         run: |
+#           STAGE="${{ github.event.inputs.choice_stage }}"
+#           REGION="${{ github.event.inputs.choice_region }}"
+#           SERVICE="${{ github.event.inputs.choice_service }}"
+#           HANDLER="${{ github.event.inputs.handler }}"
+        
+#           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+        
+#           if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
+#               REGION="${NIL}"
+#           fi
+          
+#           if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
+#               SERVICE="${NIL}"
+#           fi
+               
+#           if [ "${{ github.event.inputs.handler }}" == "" ]; then
+#               HANDLER="${NIL}"
+#           fi
+          
+#           echo "Run our script here......... "
+
+                   
+#           #      stage-any, region-all, service-all, handler-no 
+#           if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+#             echo "scripts/deploy-all.sh -t $STAGE"
+            
+          
+#           #      stage-any, region-any, service-any, handler-no            
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+#               echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE"
+          
+#           #  stage-any, region-any, service-all, handler-no                           
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+#                echo "scripts/deploy-all.sh -t $STAGE -r $REGION"
+          
+#           #  stage-any, region-all, service-any, handler-no    
+#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+#                echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE"
+          
+#           #  stage-any, region-all, service-any, handler-any
+#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+#                echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE -f $HANDLER"
+          
+#           #  stage-any, region-any, service-any, handler-any
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+#               echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE -f $HANDLER"
+               
+#           fi 
+      
+# #       - name: Run script here
+# #         run: |
+# #             STAGE="${{ github.event.inputs.choice_stage }}"
+# #             REGION="${{ github.event.inputs.choice_region }}"
+# #             SERVICE="${{ github.event.inputs.choice_service }}"
+# #             HANDLER="${{ github.event.inputs.handler }}"
+            
+# #             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+            
+# #             if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
+# #                   REGION="${NIL}"
+# #             elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
+# #                   SERVICE="${NIL}"
+# #             fi
+                  
+# #             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
+           
+            
+
+
 name: Deploy
 
-env: 
-      MICRO_SERVICES : ('auth-service' 'account-service' 'part-service' 'document-service')
-      MICRO : 'auth-service'
-      NIL : ""
-      REGION: ""
-      SERVICE: ""
-      HANDLER: ""
-      
+env:
+  GO_VERSION: '1.18'
+  GOLANGCI_VERSION: 'latest'
+
+  NIL : ""
+  REGION: ""
+  SERVICE: ""
+  HANDLER: ""
+
 on:
-  
-  workflow_dispatch:
+   workflow_dispatch:
     inputs:
-          
       choice_stage:
         type: choice
         description: Make a choice for stage
@@ -20,11 +206,11 @@ on:
           - sandbox
           - dev
           - prod
-                  
+
       choice_region:
         type: choice
         description: Make a choice for region
-        default: ''
+        default: ""
         required: false
         options:
           - all
@@ -32,11 +218,11 @@ on:
           - us-east-2
           - ap-northeast-2
           - eu-central-1
-                    
+
       choice_service:
         type: choice
         description: Make a choice for service
-        default: ''
+        default: ""
         required: false
         options:
           - all
@@ -44,11 +230,10 @@ on:
           - account
           - part
           - document
-          
-          
+
       handler:
         description: Enter handler name
-        default: ''
+        default: ""
         required: false
         type: string
 
@@ -57,63 +242,61 @@ jobs:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Go
+        id: golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
       - name: Checkout the code
         uses: actions/checkout@v2
-        
-      - name: Tag array
-#         if: ${{ github.event_name == 'push' && contains(env.MAIN_BRANCHES, steps.calculate_changed_services.outputs.diff_dest) }}
-        run: echo "my service is ${{ env.MICRO_SERVICES }}"
-        
-      - name: Tag micro
-        run : |
-          echo "my service is ${{ env.MICRO }}"
- 
-   
-      - name: display
-        run: |
-         echo "Stage is ${{ github.event.inputs.choice_stage }}"
-         echo "Region is ${{ github.event.inputs.choice_region }}"
-         echo "Service is ${{ github.event.inputs.choice_service }}"
-         echo "Handler name is ${{ github.event.inputs.handler }}"
-         
 
-      
-      - name: check stage sandbox
-        if: startsWith( github.event.inputs.choice_stage, 'sandbox' )
-        run: echo 'Stage is sandbox, set aws credentials for sandbox environment .'
-        
-      - name: check stage dev 
-        if: startsWith( github.event.inputs.choice_stage, 'dev' )
-        run: echo 'Stage is dev, set aws credentials for dev environment . '
-        
-      - name: check stage prod
-        if: startsWith( github.event.inputs.choice_stage, 'prod' )
+      - name: Find the Go Build Cache
+        id: go
+        run: echo "::set-output name=cache::$(go env GOCACHE)"
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Serverless dependencies
+        uses: bahmutov/npm-install@v1.6.0
+
+      - name: Display message
         run: |
-            echo 'Stage is prod, set aws credentials for prod environment . '
-            
-      - name: set all enterd value to variable
-        run: 
-            STAGE="${{ github.event.inputs.choice_stage }}"
-            REGION="${{ github.event.inputs.choice_region }}"
-            SERVICE="${{ github.event.inputs.choice_service }}"
-            HANDLER="${{ github.event.inputs.handler }}"
-          
-     
-     
-      - name: set region options value all to nil
-        if: startsWith( github.event.inputs.choice_region, 'all' ) 
-        run: |
-            echo 'Region is set to nil '
-            REGION="${NIL}"
-            echo "Hello $NIL nil and $REGION region "
-      
-      - name: set service options value all to nil
-        if: startsWith( github.event.inputs.choice_service, 'all' ) 
-        run: |
-            echo 'Service is set to nil '
-            SERVICE="${NIL}"
-            echo "Hello $NIL nil and $SERVICE service "
-         
+            echo "Stage is ${{ github.event.inputs.choice_stage }}"
+            echo "Region is ${{ github.event.inputs.choice_region }}"
+            echo "Service is ${{ github.event.inputs.choice_service }}"
+            echo "Handler name is ${{ github.event.inputs.handler }}"
+
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+            aws-region: ${{ github.event.inputs.choice_region }}
+
+      - name: Configure AWS credentials for (DEV)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'dev' )
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ github.event.inputs.choice_region }}
+
+      - name: Configure AWS credentials for (PROD)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'prod' )
+        with:
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+           aws-region: ${{ github.event.inputs.choice_region }}
+
       - name: Deploy start (running script)
         run: |
           STAGE="${{ github.event.inputs.choice_stage }}"
@@ -136,51 +319,28 @@ jobs:
           fi
           
           echo "Run our script here......... "
-
-                   
+               
           #      stage-any, region-all, service-all, handler-no 
           if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-            echo "scripts/deploy-all.sh -t $STAGE"
-            
-          
+            scripts/deploy -t $STAGE
+               
           #      stage-any, region-any, service-any, handler-no            
           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-              echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE"
-          
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE
+               
           #  stage-any, region-any, service-all, handler-no                           
           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-               echo "scripts/deploy-all.sh -t $STAGE -r $REGION"
-          
+            scripts/deploy -t $STAGE -r $REGION
+               
           #  stage-any, region-all, service-any, handler-no    
           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-               echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE"
-          
+            scripts/deploy -t $STAGE -s $SERVICE
+               
           #  stage-any, region-all, service-any, handler-any
           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-               echo "scripts/deploy-all.sh -t $STAGE -s $SERVICE -f $HANDLER"
-          
+            scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
+               
           #  stage-any, region-any, service-any, handler-any
           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-              echo "scripts/deploy-all.sh -t $STAGE -r $REGION -s $SERVICE -f $HANDLER"
-               
-          fi 
-      
-#       - name: Run script here
-#         run: |
-#             STAGE="${{ github.event.inputs.choice_stage }}"
-#             REGION="${{ github.event.inputs.choice_region }}"
-#             SERVICE="${{ github.event.inputs.choice_service }}"
-#             HANDLER="${{ github.event.inputs.handler }}"
-            
-#             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
-            
-#             if [ ${{ github.event.inputs.choice_region }} == "all" ]; then
-#                   REGION="${NIL}"
-#             elif [ ${{ github.event.inputs.choice_service }} == "all" ]; then
-#                   SERVICE="${NIL}"
-#             fi
-                  
-#             echo " scripts/deplpoy-all.sh -t $STAGE -r $REGION -s $SERVICE -h $HANDLER "
-           
-            
-
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
+          fi
