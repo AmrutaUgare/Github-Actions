@@ -79,6 +79,8 @@ jobs:
         with:
           npm-version: 6.x
           working-directory: ${{ env.KNYO_DIRECTORY }}
+          run : npm install
+          
 
       - name: Display message
         run: |
