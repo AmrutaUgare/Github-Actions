@@ -243,21 +243,21 @@ jobs:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        stages:
-          - stage: 'dev'
-            AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY_DEV'
-            AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID_DEV'
-          - stage: 'prod'
-            AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY_PROD'
-            AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID_PROD'
+     matrix:
+      stages:
+         - stage: 'dev'
+           AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY_DEV'
+           AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID_DEV'
+         - stage: 'prod'
+           AWS_SECRET_ACCESS_KEY: 'AWS_SECRET_ACCESS_KEY_PROD'
+           AWS_ACCESS_KEY_ID: 'AWS_ACCESS_KEY_ID_PROD'
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Install VPC Plugin and Deploy
+    - name: Install SLS Plugins and Deploy
       uses: serverless/github-action@v1.53.0
       with:
-        args: -c "serverless plugin install --name serverless-vpc-discovery && serverless deploy --stage=${{ matrix.stages.stage }} --verbose"
+        args: -c "npm install --also=dev && npm list -g && npm list && serverless deploy --stage=${{ matrix.stages.stage }} --verbose"
         entrypoint: /bin/bash
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets[matrix.stages.AWS_ACCESS_KEY_ID] }}
