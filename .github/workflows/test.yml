@@ -65,9 +65,9 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
 
-      - name: Find the Go Build Cache
-        id: go
-        run: echo "::set-output name=cache::$(go env GOCACHE)"
+#       - name: Find the Go Build Cache
+#         id: go
+#         run: echo "::set-output name=cache::$(go env GOCACHE)"
 
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
@@ -75,8 +75,9 @@ jobs:
           node-version: 14.x
 
       - name: Install Serverless dependencies
-        uses: bahmutov/npm-install@v1.6.0
+        uses: bahmutov/npm-install@v1
         with:
+          npm-version: 6.x
           working-directory: ${{ env.KNYO_DIRECTORY }}
 
       - name: Display message
