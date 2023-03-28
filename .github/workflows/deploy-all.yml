@@ -190,6 +190,7 @@ name: Deploy
 env:
   GO_VERSION: '1.18'
   GOLANGCI_VERSION: 'latest'
+  KNYO_DIRECTORY: './knyo'
 
   NIL : ""
   REGION: ""
@@ -262,6 +263,8 @@ jobs:
 
       - name: Install Serverless dependencies
         uses: bahmutov/npm-install@v1.6.0
+        with:
+          working-directory: ${{ env.KNYO_DIRECTORY }}
 
       - name: Display message
         run: |
@@ -269,6 +272,7 @@ jobs:
             echo "Region is ${{ github.event.inputs.choice_region }}"
             echo "Service is ${{ github.event.inputs.choice_service }}"
             echo "Handler name is ${{ github.event.inputs.handler }}"
+
 
       - name: Configure AWS credentials for (SANDBOX)
         uses: aws-actions/configure-aws-credentials@v1
