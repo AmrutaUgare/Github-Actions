@@ -3,7 +3,7 @@ name: Deploy-test
 env:
   GO_VERSION: '1.18'
   GOLANGCI_VERSION: 'latest'
-  KNYO_DIRECTORY: './knyo'
+  KNYO_DIRECTORY: './'
 
   NIL : ""
   REGION: ""
@@ -51,36 +51,73 @@ on:
         required: false
         type: string
 
-
 jobs:
-  deploy:
-    name: deploy
+  start_deploy:
+    name: build-n-deploy-services
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.x]
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - name: serverless deploy
-      uses: serverless/github-action@v3.1
-      with:
-        args: deploy
-      env:
-        SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-        # or if using AWS credentials directly
-        # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    - name: Deploy start (running script)
-      run: |
-        STAGE="${{ github.event.inputs.choice_stage }}"
-        REGION="${{ github.event.inputs.choice_region }}"
-        SERVICE="${{ github.event.inputs.choice_service }}"
-        HANDLER="${{ github.event.inputs.handler }}"
-        
-        echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER " 
+      - name: Setup Go
+        id: golang
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Find the Go Build Cache
+        id: go
+        run: echo "::set-output name=cache::$(go env GOCACHE)"
+
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install Serverless dependencies
+        uses: bahmutov/npm-install@v1.6.0
+        with:
+          working-directory: ${{ env.KNYO_DIRECTORY }}
+
+      - name: Display message
+        run: |
+            echo "Stage is ${{ github.event.inputs.choice_stage }}"
+            echo "Region is ${{ github.event.inputs.choice_region }}"
+            echo "Service is ${{ github.event.inputs.choice_service }}"
+            echo "Handler name is ${{ github.event.inputs.handler }}"
+
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+            aws-region: ${{ github.event.inputs.choice_region }}
+
+      - name: Configure AWS credentials for (DEV)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'dev' )
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ github.event.inputs.choice_region }}
+
+      - name: Configure AWS credentials for (PROD)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'prod' )
+        with:
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+           aws-region: ${{ github.event.inputs.choice_region }}
+
+      - name: Deploy start (running script)
+        run: |
+          STAGE="${{ github.event.inputs.choice_stage }}"
+          REGION="${{ github.event.inputs.choice_region }}"
+          SERVICE="${{ github.event.inputs.choice_service }}"
+          HANDLER="${{ github.event.inputs.handler }}"
+        
+          echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
