@@ -78,8 +78,10 @@ jobs:
         uses: actions/setup-npm@v1
         with:
           npm-version: 6.x
-          working-directory: ${{ env.KNYO_DIRECTORY }}
-          run : npm install
+          
+      - name: Install npm dependencies
+        run: npm install
+        working-directory: ${{ env.KNYO_DIRECTORY }}
           
 
       - name: Display message
