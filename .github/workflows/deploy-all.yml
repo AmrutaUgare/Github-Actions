@@ -262,9 +262,9 @@ jobs:
           node-version: 14.x
 
       - name: Install Serverless dependencies
-        uses: bahmutov/npm-install@v1.6.0
+        uses: bahmutov/npm-install@v1
         with:
-          working-directory: ${{ env.KNYO_DIRECTORY }}
+            working-directory: ${{ env.KNYO_DIRECTORY }}
 
       - name: Display message
         run: |
