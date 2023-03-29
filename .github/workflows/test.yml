@@ -61,19 +61,10 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
 
-#       - name: Find the Go Build Cache
-#         id: go
-#         run: echo "::set-output name=cache::$(go env GOCACHE)"
-
       - name: Use Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-
-#       - name: Install Serverless dependencies
-#         uses: bahmutov/setup-npm@v1
-#         with:
-#           npm-version: 6.x
 
       - name: Install NPM 6.x
         run: npm install -g npm@6
@@ -90,16 +81,7 @@ jobs:
             echo "Service is ${{ github.event.inputs.choice_service }}"
             echo "Handler name is ${{ github.event.inputs.handler }}"
             
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        if: startsWith(github.event.inputs.choice_stage, 'sandbox', 'dev', 'prod')
-        with: 
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_${{ github.event.inputs.choice_stage}} | upper() }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.choice_stage}} | upper() }}
-          aws-region: ${{ github.event.inputs.choice_region }}
-
-     
-     
+        
       - name: Configure AWS credentials for (SANDBOX)
         uses: aws-actions/configure-aws-credentials@v1
         if: |
