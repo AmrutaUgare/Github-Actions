@@ -90,32 +90,32 @@ jobs:
             echo "Service is ${{ github.event.inputs.choice_service }}"
             echo "Handler name is ${{ github.event.inputs.handler }}"
 
-      - name: Configure AWS credentials for (SANDBOX)
-        uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'sandbox' )
-        with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
-            aws-region: ${{ github.event.inputs.choice_region }}
+#       - name: Configure AWS credentials for (SANDBOX)
+#         uses: aws-actions/configure-aws-credentials@v1
+#         if: |
+#           startsWith( github.event.inputs.choice_stage, 'sandbox' )
+#         with:
+#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+#             aws-region: ${{ github.event.inputs.choice_region }}
 
-      - name: Configure AWS credentials for (DEV)
-        uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'dev' )
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          aws-region: ${{ github.event.inputs.choice_region }}
+#       - name: Configure AWS credentials for (DEV)
+#         uses: aws-actions/configure-aws-credentials@v1
+#         if: |
+#           startsWith( github.event.inputs.choice_stage, 'dev' )
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+#           aws-region: ${{ github.event.inputs.choice_region }}
 
-      - name: Configure AWS credentials for (PROD)
-        uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'prod' )
-        with:
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-           aws-region: ${{ github.event.inputs.choice_region }}
+#       - name: Configure AWS credentials for (PROD)
+#         uses: aws-actions/configure-aws-credentials@v1
+#         if: |
+#           startsWith( github.event.inputs.choice_stage, 'prod' )
+#         with:
+#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+#            aws-region: ${{ github.event.inputs.choice_region }}
 
     
       - name: Deploy start
@@ -126,3 +126,51 @@ jobs:
           HANDLER="${{ github.event.inputs.handler }}"
                 
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+          
+      - name: Deploy start (running script)
+        run: |
+          STAGE="${{ github.event.inputs.choice_stage }}"
+          REGION="${{ github.event.inputs.choice_region }}"
+          SERVICE="${{ github.event.inputs.choice_service }}"
+          HANDLER="${{ github.event.inputs.handler }}"
+        
+          echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+        
+          if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
+              REGION="${NIL}"
+          fi
+          
+          if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
+              SERVICE="${NIL}"
+          fi
+               
+          if [ "${{ github.event.inputs.handler }}" == "" ]; then
+              HANDLER="${NIL}"
+          fi
+          
+          echo "Run our script here......... "
+               
+          #      stage-any, region-all, service-all, handler-no 
+          if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE
+               
+          #      stage-any, region-any, service-any, handler-no            
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE
+               
+          #  stage-any, region-any, service-all, handler-no                           
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -r $REGION
+               
+          #  stage-any, region-all, service-any, handler-no    
+          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -s $SERVICE
+               
+          #  stage-any, region-all, service-any, handler-any
+          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+            scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
+               
+          #  stage-any, region-any, service-any, handler-any
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
+          fi
