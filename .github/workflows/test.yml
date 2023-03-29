@@ -5,13 +5,10 @@ env:
   GOLANGCI_VERSION: 'latest'
   KNYO_DIRECTORY: './'
 
-  NIL : ""
-  REGION: ""
-  SERVICE: ""
-  HANDLER: ""
+  NIL: ""
 
 on:
-   workflow_dispatch:
+  workflow_dispatch:
     inputs:
       choice_stage:
         type: choice
@@ -57,7 +54,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Go
-        id: golang
         uses: actions/setup-go@v2
         with:
           go-version: ${{ env.GO_VERSION }}
@@ -87,45 +83,19 @@ jobs:
         working-directory: ${{ env.KNYO_DIRECTORY }}
           
 
-      - name: Display message
-        run: |
-            echo "Stage is ${{ github.event.inputs.choice_stage }}"
-            echo "Region is ${{ github.event.inputs.choice_region }}"
-            echo "Service is ${{ github.event.inputs.choice_service }}"
-            echo "Handler name is ${{ github.event.inputs.handler }}"
-
-      - name: Configure AWS credentials for (SANDBOX)
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        if: github.event.inputs.choice_stage != ''
         with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
-            aws-region: ${{ github.event.inputs.choice_region }}
-
-      - name: Configure AWS credentials for (DEV)
-        uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'dev' )
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-access-key-id: ${{ secrets['AWS_ACCESS_KEY_' + github.event.inputs.choice_stage.toUpperCase()] }}
+          aws-secret-access-key: ${{ secrets['AWS_SECRET_ACCESS_KEY_' + github.event.inputs.choice_stage.toUpperCase()] }}
           aws-region: ${{ github.event.inputs.choice_region }}
 
-      - name: Configure AWS credentials for (PROD)
-        uses: aws-actions/configure-aws-credentials@v1
-        if: |
-          startsWith( github.event.inputs.choice_stage, 'prod' )
-        with:
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-           aws-region: ${{ github.event.inputs.choice_region }}
-
-      - name: Deploy start (running script)
+      - name: Deploy start
         run: |
           STAGE="${{ github.event.inputs.choice_stage }}"
           REGION="${{ github.event.inputs.choice_region }}"
           SERVICE="${{ github.event.inputs.choice_service }}"
           HANDLER="${{ github.event.inputs.handler }}"
-        
+                
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
