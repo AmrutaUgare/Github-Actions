@@ -109,11 +109,11 @@ jobs:
 #            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
 #            aws-region: ${{ github.event.inputs.choice_region }}
 
-      - name: Copy deploy script
-        run: cp scripts/deploy deploy
+#       - name: Copy deploy script
+#         run: cp scripts/deploy deploy
 
-      - name: Make deploy script executable
-        run: chmod +x deploy
+#       - name: Make deploy script executable
+#         run: chmod +x deploy
 
       
       
@@ -125,10 +125,7 @@ jobs:
           HANDLER="${{ github.event.inputs.handler }}"
                 
             echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
-          
-      - name: Run deploy script
-        run: ./deploy
-        
+                
           if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
               REGION="${NIL}"
           fi
@@ -143,27 +140,27 @@ jobs:
           
           echo "Run our script here......... "
                
-#           #      stage-any, region-all, service-all, handler-no 
-#           if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-#             scripts/deploy -t $STAGE
+          #      stage-any, region-all, service-all, handler-no 
+          if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE
                
-#           #      stage-any, region-any, service-any, handler-no            
-#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-#             scripts/deploy -t $STAGE -r $REGION -s $SERVICE
+          #      stage-any, region-any, service-any, handler-no            
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE
                
-#           #  stage-any, region-any, service-all, handler-no                           
-#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-#             scripts/deploy -t $STAGE -r $REGION
+          #  stage-any, region-any, service-all, handler-no                           
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -r $REGION
                
-#           #  stage-any, region-all, service-any, handler-no    
-#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-#             scripts/deploy -t $STAGE -s $SERVICE
+          #  stage-any, region-all, service-any, handler-no    
+          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+            scripts/deploy -t $STAGE -s $SERVICE
                
-#           #  stage-any, region-all, service-any, handler-any
-#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-#             scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
+          #  stage-any, region-all, service-any, handler-any
+          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+            scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
                
-#           #  stage-any, region-any, service-any, handler-any
-#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-#             scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
-#           fi
+          #  stage-any, region-any, service-any, handler-any
+          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+            scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
+          fi
