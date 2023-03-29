@@ -87,8 +87,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         if: github.event.inputs.choice_stage != ''
         with:
-          aws-access-key-id: secrets.AWS_ACCESS_KEY_${{ github.event.inputs.choice_stage.toUpperCase() }}
-          aws-secret-access-key: secrets.AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.choice_stage.toUpperCase() }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_${{ github.event.inputs.choice_stage }}_UPPERCASE }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.choice_stage }}_UPPERCASE }}
           aws-region: ${{ github.event.inputs.choice_region }}
 
       - name: Deploy start
