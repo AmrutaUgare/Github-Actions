@@ -74,10 +74,13 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Install Serverless dependencies
-        uses: bahmutov/setup-npm@v1
-        with:
-          npm-version: 6.x
+#       - name: Install Serverless dependencies
+#         uses: bahmutov/setup-npm@v1
+#         with:
+#           npm-version: 6.x
+
+      - name: Install NPM 6.x
+        run: npm install -g npm@6
           
       - name: Install npm dependencies
         run: npm install
