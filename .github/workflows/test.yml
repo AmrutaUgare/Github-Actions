@@ -90,32 +90,32 @@ jobs:
             echo "Service is ${{ github.event.inputs.choice_service }}"
             echo "Handler name is ${{ github.event.inputs.handler }}"
 
-#       - name: Configure AWS credentials for (SANDBOX)
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'sandbox' )
-#         with:
-#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
-#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
-#             aws-region: ${{ github.event.inputs.choice_region }}
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+            aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Configure AWS credentials for (DEV)
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'dev' )
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-#           aws-region: ${{ github.event.inputs.choice_region }}
+      - name: Configure AWS credentials for (DEV)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'dev' )
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Configure AWS credentials for (PROD)
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'prod' )
-#         with:
-#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
-#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-#            aws-region: ${{ github.event.inputs.choice_region }}
+      - name: Configure AWS credentials for (PROD)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'prod' )
+        with:
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+           aws-region: ${{ github.event.inputs.choice_region }}
 
     
       - name: Deploy start
