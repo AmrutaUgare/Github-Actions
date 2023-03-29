@@ -94,9 +94,10 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         if: startsWith(github.event.inputs.choice_stage, 'sandbox', 'dev', 'prod')
         with:
-          aws-access-key-id: ${{ secrets[concat('AWS_ACCESS_KEY_', upper(github.event.inputs.choice_stage))] }}
-          aws-secret-access-key: ${{ secrets[concat('AWS_SECRET_ACCESS_KEY_', upper(github.event.inputs.choice_stage))] }}
+          aws-access-key-id: ${{ secrets["AWS_ACCESS_KEY_${{ github.event.inputs.choice_stage^^ }}"] }}
+          aws-secret-access-key: ${{ secrets["AWS_SECRET_ACCESS_KEY_${{ github.event.inputs.choice_stage^^ }}"] }}
           aws-region: ${{ github.event.inputs.choice_region }}
+
      
      
       - name: Configure AWS credentials for (SANDBOX)
