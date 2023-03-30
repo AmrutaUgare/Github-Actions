@@ -142,6 +142,7 @@ jobs:
           STAGE="${{ github.event.inputs.choice_stage }}"
           REGION="${{ github.event.inputs.choice_region }}"
           SERVICE="${{ github.event.inputs.choice_service }}"
+          SERVICE="${{ github.event.inputs.choice_service }}-service"
           HANDLER="${{ github.event.inputs.handler }}"
                 
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
