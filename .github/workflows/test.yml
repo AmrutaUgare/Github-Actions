@@ -61,6 +61,14 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
         
+      - name: Service directory name
+        run:
+          echo ${{ github.event.inputs.choice_service }}-service
+        
+      - name: Install NPM dependencies
+        run: npm install
+        working-directory: ${{ github.event.inputs.choice_service }}-service
+        
 #       - name: Install Plugin and Deploy
 #         uses: serverless/github-action@v3.1
 #         with:
@@ -82,6 +90,8 @@ jobs:
 #       - name: Install Serverless and its dependencies
 #         run: npm install -g serverless@3.25.1
 # #         working-directory: ${{ env.KNYO_DIRECTORY }}
+
+
           
 
       - name: Display message
