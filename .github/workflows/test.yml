@@ -155,8 +155,8 @@ jobs:
           SERVICE="${{ github.event.inputs.choice_service }}-service"
           HANDLER="${{ github.event.inputs.handler }}"
           
-          
-          cd ${{ github.event.inputs.choice_service }}-service
+          ls
+          cd $SERVICE
           npm install
           serverless --version
           cd ..
