@@ -75,7 +75,7 @@ jobs:
         
       - name: Install Serverless and its dependencies
         run: npm install -g serverless@3.25.1
-        working-directory: ${{ env.KNYO_DIRECTORY }}
+#         working-directory: ${{ env.KNYO_DIRECTORY }}
           
 
       - name: Display message
