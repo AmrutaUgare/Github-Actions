@@ -65,9 +65,9 @@ jobs:
         run:
           echo ${{ github.event.inputs.choice_service }}-service
         
-      - name: Install NPM dependencies
-        run: npm install
-        working-directory: ${{ github.event.inputs.choice_service }}-service
+#       - name: Install NPM dependencies
+#         run: npm install
+#         working-directory: ${{ github.event.inputs.choice_service }}-service
         
 #       - name: Install Plugin and Deploy
 #         uses: serverless/github-action@v3.1
@@ -154,8 +154,16 @@ jobs:
           SERVICE="${{ github.event.inputs.choice_service }}"
           SERVICE="${{ github.event.inputs.choice_service }}-service"
           HANDLER="${{ github.event.inputs.handler }}"
+          
+          
+          cd ${{ github.event.inputs.choice_service }}-service
+          npm install
+          serverless --version
+          cd ..
                 
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+          
+          
           
                 
           if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
