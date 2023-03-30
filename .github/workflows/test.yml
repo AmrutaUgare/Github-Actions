@@ -89,6 +89,8 @@ jobs:
             echo "Stage is ${{ github.event.inputs.choice_stage }}"
             echo "Region is ${{ github.event.inputs.choice_region }}"
             echo "Service is ${{ github.event.inputs.choice_service }}"
+            SERVICE="${{ github.event.inputs.choice_service }}-service"
+            echo "Service is ${{ github.event.inputs.choice_service }}"
             echo "Handler name is ${{ github.event.inputs.handler }}"
             
         
