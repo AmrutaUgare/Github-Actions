@@ -61,11 +61,11 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
         
-      - name: Install Plugin and Deploy
-        uses: serverless/github-action@v3.1
-        with:
-          args: -c "cd ./ && serverless deploy"
-          entrypoint: /bin/sh
+#       - name: Install Plugin and Deploy
+#         uses: serverless/github-action@v3.1
+#         with:
+#           args: -c "cd ./ && serverless deploy"
+#           entrypoint: /bin/sh
 
 #       - name: Use Node.js 14.x
 #         uses: actions/setup-node@v1
