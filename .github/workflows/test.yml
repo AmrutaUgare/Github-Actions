@@ -64,7 +64,7 @@ jobs:
       - name: Install Plugin and Deploy
         uses: serverless/github-action@v2
         with:
-          args: -c "cd Github-Actions && serverless deploy"
+          args: -c "cd ./ && serverless deploy"
           entrypoint: /bin/sh
 
 #       - name: Use Node.js 14.x
