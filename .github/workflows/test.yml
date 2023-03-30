@@ -60,22 +60,28 @@ jobs:
 
       - name: Checkout the code
         uses: actions/checkout@v2
-
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-
-      - name: Install NPM 6.x
-        run: npm install -g npm@6
-          
-      - name: Install npm dependencies
-        run: npm install
-        working-directory: ${{ env.KNYO_DIRECTORY }}
         
-      - name: Install Serverless and its dependencies
-        run: npm install -g serverless@3.25.1
+      - name: Install Plugin and Deploy
+        uses: serverless/github-action@v2
+        with:
+          args: -c "serverless plugin install --name serverless-deploy && serverless deploy"
+          entrypoint: /bin/sh
+
+#       - name: Use Node.js 14.x
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 14.x
+
+#       - name: Install NPM 6.x
+#         run: npm install -g npm@6
+          
+#       - name: Install npm dependencies
+#         run: npm install
 #         working-directory: ${{ env.KNYO_DIRECTORY }}
+        
+#       - name: Install Serverless and its dependencies
+#         run: npm install -g serverless@3.25.1
+# #         working-directory: ${{ env.KNYO_DIRECTORY }}
           
 
       - name: Display message
