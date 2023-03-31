@@ -69,11 +69,11 @@ jobs:
 #         run: npm install
 #         working-directory: ${{ github.event.inputs.choice_service }}-service
         
-      - name: Install Plugin and Deploy
-        uses: serverless/github-action@v3.1
-        with:
-          args: -c "cd ./${{ github.event.inputs.choice_service }}-service && serverless deploy"
-          entrypoint: /bin/sh
+#       - name: Install Plugin and Deploy
+#         uses: serverless/github-action@v3.1
+#         with:
+#           args: -c "cd ./${{ github.event.inputs.choice_service }}-service && serverless deploy"
+#           entrypoint: /bin/sh
 
 #       - name: Use Node.js 14.x
 #         uses: actions/setup-node@v1
@@ -156,11 +156,12 @@ jobs:
           HANDLER="${{ github.event.inputs.handler }}"
           
           ls
+          pwd
           cd $SERVICE
-          npm install
-          serverless --version
+          pwd
           cd ..
-                
+          pwd
+          
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
           
           
