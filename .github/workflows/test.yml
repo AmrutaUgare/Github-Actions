@@ -298,21 +298,30 @@ jobs:
           echo "---- Start process -----------"
          
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+          
+          if [ "$REGION" == "all" ]; then
+             REGION=""
+          fi
+          
+          if [ "$SERVICE" == "all" ]; then
+             SERVICE=""
+          fi
+          
         
           case "${STAGE},${REGION},${SERVICE},${HANDLER}" in
-            *,all,all,)
+            *,"","",)
               echo "-- stage-any, region-all, service-all, handler-no --"
               echo "scripts/knyo -t $STAGE ";;
             *,*,*,)
                echo "-- stage-any, region-any, service-any, handler-no --"
                echo "scripts/knyo -t $STAGE -r $REGION -s $SERVICE" ;;
-            *,*,all,)
+            *,*,"",)
               echo "-- stage-any, region-any, service-all, handler-no --"
               echo "scripts/knyo -t $STAGE -r $REGION ";;
-            *,all,*,)
+            *,"",*,)
               echo "-- stage-any, region-all, service-any, handler-no --"
               echo "scripts/knyo -t $STAGE -s $SERVICE ";;
-            *,all,*,*)
+            *,"",*,*)
               echo "-- stage-any, region-all, service-any, handler-any --"
               echo "scripts/knyo -t $STAGE -s $SERVICE -f $HANDLER ";;
             *,*,*,*)
