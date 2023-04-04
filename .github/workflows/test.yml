@@ -262,9 +262,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
+      DB_DIR: $PATH/scripts/deployments.db
     steps:
       - name: Print CI variable
         run: echo $CI
+        
+      - name: Print DB path
+        run: echo $DB_DIR
 
       - name: Setup Go
         id: golang
