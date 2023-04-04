@@ -262,7 +262,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DB_DIR: ${{ github.workspace }}/scripts/deployments.db
+      DB_DIR: ${{ env.PATH }}/scripts/deployments.db
     steps:
       - name: Print CI variable
         run: echo $CI
