@@ -309,7 +309,7 @@ jobs:
               scripts/knyo -t $STAGE ;;
             *,*,*,)
                echo "-- stage-any, region-any, service-any, handler-no --"
-               scripts/knyo -t $STAGE -r $REGION -s $SERVICE
+               scripts/knyo -t $STAGE -r $REGION -s $SERVICE ;;
             *,*,all,)
               echo "-- stage-any, region-any, service-all, handler-no --"
               scripts/knyo -t $STAGE -r $REGION ;;
