@@ -1,14 +1,226 @@
-name: Deploy-test
+# name: Deploy-test
+
+# env:
+#   GO_VERSION: '1.18'
+#   GOLANGCI_VERSION: 'latest'
+#   KNYO_DIRECTORY: './'
+
+#   NIL: ""
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       choice_stage:
+#         type: choice
+#         description: Make a choice for stage
+#         options:
+#           - sandbox
+#           - dev
+#           - prod
+
+#       choice_region:
+#         type: choice
+#         description: Make a choice for region
+#         default: ""
+#         required: false
+#         options:
+#           - all
+#           - ap-south-1
+#           - us-east-2
+#           - ap-northeast-2
+#           - eu-central-1
+
+#       choice_service:
+#         type: choice
+#         description: Make a choice for service
+#         default: ""
+#         required: false
+#         options:
+#           - all
+#           - auth
+#           - account
+#           - part
+#           - document
+
+#       handler:
+#         description: Enter handler name
+#         default: ""
+#         required: false
+#         type: string
+
+# jobs:
+#   start_deploy:
+#     name: build-n-deploy-services
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Setup Go
+#         uses: actions/setup-go@v2
+#         with:
+#           go-version: ${{ env.GO_VERSION }}
+
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
+        
+#       - name: Service directory name
+#         run:
+#           echo ${{ github.event.inputs.choice_service }}-service
+        
+# #       - name: Install NPM dependencies
+# #         run: npm install
+# #         working-directory: ${{ github.event.inputs.choice_service }}-service
+        
+# #       - name: Install Plugin and Deploy
+# #         uses: serverless/github-action@v3.1
+# #         with:
+# #           args: -c "cd ./${{ github.event.inputs.choice_service }}-service && serverless deploy"
+# #           entrypoint: /bin/sh
+
+# #       - name: Use Node.js 14.x
+# #         uses: actions/setup-node@v1
+# #         with:
+# #           node-version: 14.x
+
+# #       - name: Install NPM 6.x
+# #         run: npm install -g npm@6
+          
+# #       - name: Install npm dependencies
+# #         run: npm install
+# #         working-directory: ${{ env.KNYO_DIRECTORY }}
+        
+# #       - name: Install Serverless and its dependencies
+# #         run: npm install -g serverless@3.25.1
+# # #         working-directory: ${{ env.KNYO_DIRECTORY }}
+
+
+          
+
+#       - name: Display message
+#         run: |
+#             echo "Stage is ${{ github.event.inputs.choice_stage }}"
+#             echo "Region is ${{ github.event.inputs.choice_region }}"
+#             echo "Service is ${{ github.event.inputs.choice_service }}"
+#             echo "Service is ${{ github.event.inputs.choice_service }}-service"
+#             echo "Handler name is ${{ github.event.inputs.handler }}"
+            
+        
+# #       - name: Configure AWS credentials for (SANDBOX)
+# #         uses: aws-actions/configure-aws-credentials@v1
+# #         if: |
+# #           startsWith( github.event.inputs.choice_stage, 'sandbox' )
+# #         with:
+# #             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+# #             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
+# #             aws-region: ${{ github.event.inputs.choice_region }}
+
+# #       - name: Configure AWS credentials for (DEV)
+# #         uses: aws-actions/configure-aws-credentials@v1        
+# #         if: |
+# #           startsWith( github.event.inputs.choice_stage, 'dev' )
+# #         with:
+# #           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}        
+# #           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}   
+# #           aws-region: ${{ github.event.inputs.choice_region }}
+
+# #       - name: Configure AWS credentials for (PROD)
+# #         uses: aws-actions/configure-aws-credentials@v1
+# #         if: |
+# #           startsWith( github.event.inputs.choice_stage, 'prod' )
+# #         with:
+# #            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+# #            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+# #            aws-region: ${{ github.event.inputs.choice_region }}
+
+# #       - name: Copy deploy script
+# #         run: cp scripts/deploy deploy
+
+# #       - name: Make deploy script executable
+# #         run: chmod +x deploy
+
+      
+# #       - name: Configure AWS credentials
+# #         uses: aws-actions/configure-aws-credentials@v1
+# #         if: startsWith(github.event.inputs.choice_stage, 'sandbox', 'dev', 'prod')
+# #         with:
+# #           aws-access-key-id: ${{ secrets[concat('AWS_ACCESS_KEY_', upper(github.event.inputs.choice_stage))] }}
+# #           aws-secret-access-key: ${{ secrets[concat('AWS_SECRET_KEY_', upper(github.event.inputs.choice_stage))] }}
+# #           aws-region: ${{ github.event.inputs.choice_region }}
+      
+
+#       - name: Deploy start
+#         run: |
+#           STAGE="${{ github.event.inputs.choice_stage }}"
+#           REGION="${{ github.event.inputs.choice_region }}"
+#           SERVICE="${{ github.event.inputs.choice_service }}"
+#           HANDLER="${{ github.event.inputs.handler }}"
+          
+#           ls
+#           pwd
+#           cd ${{ github.event.inputs.choice_service }}-service
+#           pwd
+#           cd ..
+#           pwd
+          
+#           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+          
+          
+          
+                
+#           if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
+#               REGION="${NIL}"
+#           fi
+          
+#           if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
+#               SERVICE="${NIL}"
+#           fi
+               
+#           if [ "${{ github.event.inputs.handler }}" == "" ]; then
+#               HANDLER="${NIL}"
+#           fi
+          
+#           chmod +x scripts/deploy
+          
+#           echo "Run our script here......... "
+               
+#           #      stage-any, region-all, service-all, handler-no 
+#           if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+#             scripts/deploy -t $STAGE
+               
+#           #      stage-any, region-any, service-any, handler-no            
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+#             scripts/deploy -t $STAGE -r $REGION -s $SERVICE
+               
+#           #  stage-any, region-any, service-all, handler-no                           
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
+#             scripts/deploy -t $STAGE -r $REGION
+               
+#           #  stage-any, region-all, service-any, handler-no    
+#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
+#             scripts/deploy -t $STAGE -s $SERVICE
+               
+#           #  stage-any, region-all, service-any, handler-any
+#           elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+#             scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
+               
+#           #  stage-any, region-any, service-any, handler-any
+#           elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
+#             scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
+#           fi
+
+
+name: Deploy
 
 env:
   GO_VERSION: '1.18'
   GOLANGCI_VERSION: 'latest'
   KNYO_DIRECTORY: './'
 
-  NIL: ""
+  NIL : ""
+  REGION: ""
+  SERVICE: ""
+  HANDLER: ""
 
 on:
-  workflow_dispatch:
+   workflow_dispatch:
     inputs:
       choice_stage:
         type: choice
@@ -52,156 +264,89 @@ jobs:
   start_deploy:
     name: build-n-deploy-services
     runs-on: ubuntu-latest
+    env:
+      CI: true
     steps:
+      - name: Print CI variable
+        run: echo $CI
+
       - name: Setup Go
+        id: golang
         uses: actions/setup-go@v2
         with:
           go-version: ${{ env.GO_VERSION }}
 
       - name: Checkout the code
         uses: actions/checkout@v2
-        
-      - name: Service directory name
-        run:
-          echo ${{ github.event.inputs.choice_service }}-service
-        
-#       - name: Install NPM dependencies
-#         run: npm install
-#         working-directory: ${{ github.event.inputs.choice_service }}-service
-        
-#       - name: Install Plugin and Deploy
-#         uses: serverless/github-action@v3.1
-#         with:
-#           args: -c "cd ./${{ github.event.inputs.choice_service }}-service && serverless deploy"
-#           entrypoint: /bin/sh
 
-#       - name: Use Node.js 14.x
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 14.x
-
-#       - name: Install NPM 6.x
-#         run: npm install -g npm@6
-          
-#       - name: Install npm dependencies
-#         run: npm install
-#         working-directory: ${{ env.KNYO_DIRECTORY }}
-        
-#       - name: Install Serverless and its dependencies
-#         run: npm install -g serverless@3.25.1
-# #         working-directory: ${{ env.KNYO_DIRECTORY }}
-
-
-          
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
 
       - name: Display message
         run: |
             echo "Stage is ${{ github.event.inputs.choice_stage }}"
             echo "Region is ${{ github.event.inputs.choice_region }}"
             echo "Service is ${{ github.event.inputs.choice_service }}"
-            echo "Service is ${{ github.event.inputs.choice_service }}-service"
             echo "Handler name is ${{ github.event.inputs.handler }}"
-            
-        
-#       - name: Configure AWS credentials for (SANDBOX)
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'sandbox' )
-#         with:
-#             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
-#             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_SANDBOX }}
-#             aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Configure AWS credentials for (DEV)
-#         uses: aws-actions/configure-aws-credentials@v1        
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'dev' )
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}        
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}   
-#           aws-region: ${{ github.event.inputs.choice_region }}
+      - name: Configure AWS credentials for (SANDBOX)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'sandbox' )
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_SANDBOX }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_SANDBOX }}
+            aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Configure AWS credentials for (PROD)
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: |
-#           startsWith( github.event.inputs.choice_stage, 'prod' )
-#         with:
-#            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
-#            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-#            aws-region: ${{ github.event.inputs.choice_region }}
+      - name: Configure AWS credentials for (DEV)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'dev' )
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_DEV }}
+          aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Copy deploy script
-#         run: cp scripts/deploy deploy
+      - name: Configure AWS credentials for (PROD)
+        uses: aws-actions/configure-aws-credentials@v1
+        if: |
+          startsWith( github.event.inputs.choice_stage, 'prod' )
+        with:
+           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_PROD }}
+           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY_PROD }}
+           aws-region: ${{ github.event.inputs.choice_region }}
 
-#       - name: Make deploy script executable
-#         run: chmod +x deploy
-
-      
-#       - name: Configure AWS credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         if: startsWith(github.event.inputs.choice_stage, 'sandbox', 'dev', 'prod')
-#         with:
-#           aws-access-key-id: ${{ secrets[concat('AWS_ACCESS_KEY_', upper(github.event.inputs.choice_stage))] }}
-#           aws-secret-access-key: ${{ secrets[concat('AWS_SECRET_KEY_', upper(github.event.inputs.choice_stage))] }}
-#           aws-region: ${{ github.event.inputs.choice_region }}
-      
-
-      - name: Deploy start
+      - name: Deploy start (running script)
         run: |
           STAGE="${{ github.event.inputs.choice_stage }}"
           REGION="${{ github.event.inputs.choice_region }}"
           SERVICE="${{ github.event.inputs.choice_service }}"
           HANDLER="${{ github.event.inputs.handler }}"
-          
-          ls
-          pwd
-          cd ${{ github.event.inputs.choice_service }}-service
-          pwd
-          cd ..
-          pwd
-          
+              
+          echo "---- Start process -----------"
+         
           echo " -t $STAGE -r $REGION -s $SERVICE -f $HANDLER "
+        
+          case "${STAGE},${REGION},${SERVICE},${HANDLER}" in
+            *,all,all,)
+              echo "-- stage-any, region-all, service-all, handler-no --"
+              scripts/knyo -t $STAGE ;;
+            *,*,*,)
+               echo "-- stage-any, region-any, service-any, handler-no --"
+               scripts/knyo -t $STAGE -r $REGION -s $SERVICE
+            *,*,all,)
+              echo "-- stage-any, region-any, service-all, handler-no --"
+              scripts/knyo -t $STAGE -r $REGION ;;
+            *,all,*,)
+              echo "-- stage-any, region-all, service-any, handler-no --"
+              scripts/knyo -t $STAGE -s $SERVICE ;;
+            *,all,*,*)
+              echo "-- stage-any, region-all, service-any, handler-any --"
+              scripts/knyo -t $STAGE -s $SERVICE -f $HANDLER ;;
+            *,*,*,*)
+              echo "-- stage-any, region-any, service-any, handler-any --"
+              scripts/knyo -t $STAGE -r $REGION -s $SERVICE -f $HANDLER ;;
+          esac
           
-          
-          
-                
-          if [ "${{ github.event.inputs.choice_region }}" == "all" ]; then
-              REGION="${NIL}"
-          fi
-          
-          if [ "${{ github.event.inputs.choice_service }}" == "all" ]; then
-              SERVICE="${NIL}"
-          fi
-               
-          if [ "${{ github.event.inputs.handler }}" == "" ]; then
-              HANDLER="${NIL}"
-          fi
-          
-          chmod +x scripts/deploy
-          
-          echo "Run our script here......... "
-               
-          #      stage-any, region-all, service-all, handler-no 
-          if [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-            scripts/deploy -t $STAGE
-               
-          #      stage-any, region-any, service-any, handler-no            
-          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-            scripts/deploy -t $STAGE -r $REGION -s $SERVICE
-               
-          #  stage-any, region-any, service-all, handler-no                           
-          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" == "" ] && [ "$HANDLER" == "" ]; then
-            scripts/deploy -t $STAGE -r $REGION
-               
-          #  stage-any, region-all, service-any, handler-no    
-          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" == "" ]; then
-            scripts/deploy -t $STAGE -s $SERVICE
-               
-          #  stage-any, region-all, service-any, handler-any
-          elif [ "$STAGE" != "" ] && [ "$REGION" == "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-            scripts/deploy -t $STAGE -s $SERVICE -f $HANDLER
-               
-          #  stage-any, region-any, service-any, handler-any
-          elif [ "$STAGE" != "" ] && [ "$REGION" != "" ] && [ "$SERVICE" != "" ] && [ "$HANDLER" != "" ]; then
-            scripts/deploy -t $STAGE -r $REGION -s $SERVICE -f $HANDLER              
-          fi
