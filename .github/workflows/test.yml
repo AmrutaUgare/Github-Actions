@@ -262,7 +262,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DB_DIR: ${{ env.PATH }}/scripts/deployments.db
+      DB_DIR: ${{ PATH }}/scripts/deployments.db
     steps:
       - name: Print CI variable
         run: echo $CI
@@ -283,6 +283,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+          
+        env:
+         DB_DIR: ${{ env.DB_DIR }}
+         
+      - name: Print DB path
+        run: echo $DB_DIR
+
 
       - name: Display message
         run: |
