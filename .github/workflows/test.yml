@@ -262,7 +262,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DB_DIR: ${{ PATH }}/scripts/deployments.db
+      DB_DIR: $PATH/scripts/deployments.db
     steps:
       - name: Print CI variable
         run: echo $CI
