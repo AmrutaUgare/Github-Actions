@@ -214,10 +214,6 @@ env:
   GOLANGCI_VERSION: 'latest'
   KNYO_DIRECTORY: './'
 
-#   NIL : ""
-#   REGION: ""
-#   SERVICE: ""
-#   HANDLER: ""
 
 on:
    workflow_dispatch:
@@ -306,21 +302,21 @@ jobs:
           case "${STAGE},${REGION},${SERVICE},${HANDLER}" in
             *,all,all,)
               echo "-- stage-any, region-all, service-all, handler-no --"
-              scripts/knyo -t $STAGE ;;
+              echo "scripts/knyo -t $STAGE ";;
             *,*,*,)
                echo "-- stage-any, region-any, service-any, handler-no --"
-               scripts/knyo -t $STAGE -r $REGION -s $SERVICE ;;
+               echo "scripts/knyo -t $STAGE -r $REGION -s $SERVICE" ;;
             *,*,all,)
               echo "-- stage-any, region-any, service-all, handler-no --"
-              scripts/knyo -t $STAGE -r $REGION ;;
+              echo "scripts/knyo -t $STAGE -r $REGION ";;
             *,all,*,)
               echo "-- stage-any, region-all, service-any, handler-no --"
-              scripts/knyo -t $STAGE -s $SERVICE ;;
+              echo "scripts/knyo -t $STAGE -s $SERVICE ";;
             *,all,*,*)
               echo "-- stage-any, region-all, service-any, handler-any --"
-              scripts/knyo -t $STAGE -s $SERVICE -f $HANDLER ;;
+              echo "scripts/knyo -t $STAGE -s $SERVICE -f $HANDLER ";;
             *,*,*,*)
               echo "-- stage-any, region-any, service-any, handler-any --"
-              scripts/knyo -t $STAGE -r $REGION -s $SERVICE -f $HANDLER ;;
+              echo "scripts/knyo -t $STAGE -r $REGION -s $SERVICE -f $HANDLER ";;
           esac
           
