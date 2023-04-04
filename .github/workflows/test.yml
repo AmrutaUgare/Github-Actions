@@ -214,10 +214,10 @@ env:
   GOLANGCI_VERSION: 'latest'
   KNYO_DIRECTORY: './'
 
-  NIL : ""
-  REGION: ""
-  SERVICE: ""
-  HANDLER: ""
+#   NIL : ""
+#   REGION: ""
+#   SERVICE: ""
+#   HANDLER: ""
 
 on:
    workflow_dispatch:
