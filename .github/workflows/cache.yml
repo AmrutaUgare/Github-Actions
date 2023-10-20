@@ -1,4 +1,4 @@
-name: Tests
+name: Cache
 
 on:
   pull_request:
@@ -17,24 +17,22 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      
-    - name: Setup Node.js 16.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: npm
-        
-    - run: npm ci
-    
-    - name: Prettier Format Check
-      run: npm run format-check
-      
-    - name: ESLint Check
-      run: npm run lint
-      
-    - name: Build & Test
-      run: npm run test
 
+    - name: Setup GO
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+        check-latest: true
+          
+    - uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod  
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+          
   # End to end save and restore
   test-save:
     runs-on: ubuntu-latest
